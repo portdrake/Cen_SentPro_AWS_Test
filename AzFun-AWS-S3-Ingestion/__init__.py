@@ -249,18 +249,17 @@ class S3Client:
         return sorted(ls, key=lambda k: k['LastModified'])
 
     def process_obj(self, obj):        
-        key = obj['Key']        
+        key = obj['Key']
+            
         if '.json.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
-            #STAdd use this line for filetype level troubleshooting = logging.info(json_file)
+            #STADD
+            recordsvar = ['Records']
+            print.info(recordsvar)
 
-            #STAdd commenting out JSONLOAD and sort as output appears to be .log
-            #logEvents = json.load(json_file)['Records']
-            #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
-
-            #STAdd added the .log sorter instead
-            sortedLogEvents = self.parse_log_file(json_file) 
+            logEvents = json.load(json_file)[recordsvar] #STADD originalline logEvents = json.load(json_file)['Records']
+            sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
         elif '.jsonl.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
