@@ -176,7 +176,7 @@ class S3Client:
     def get_files_list(self, ts_from, ts_to):
         files = []
         folders = self.s3.list_objects(Bucket=self.aws_s3_bucket, Prefix=self.aws_s3_prefix, Delimiter='/')       
-        logging.info(folders) #STAdd Debugging
+        #STAdd Debugging logging.info(folders) 
         marker_end = (ts_from - datetime.timedelta(minutes=60)).strftime("/%Y-%m-%d/%Y-%m-%d-%H-%M")
         
         for o in folders.get('CommonPrefixes'):        
@@ -253,6 +253,8 @@ class S3Client:
         if '.json.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
+            #STAdd
+            logging.info(json_file)
             logEvents = json.load(json_file)['Records']
             sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
         elif '.jsonl.gz' in key.lower():
