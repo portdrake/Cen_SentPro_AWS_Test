@@ -255,7 +255,7 @@ class S3Client:
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
             #STADD
-            recordsvar = ['Records']
+            recordsvar = obj['Records']
             logging.info(recordsvar)
 
             logEvents = json.load(json_file)[recordsvar] #STADD originalline logEvents = json.load(json_file)['Records']
