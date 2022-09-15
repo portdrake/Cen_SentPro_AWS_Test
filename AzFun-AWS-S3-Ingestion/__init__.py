@@ -256,7 +256,7 @@ class S3Client:
             json_file = self.unpack_file(downloaded_obj, key)
             #STADD
             recordsvar = ['Records']
-            print.info(recordsvar)
+            logging.info(recordsvar)
 
             logEvents = json.load(json_file)[recordsvar] #STADD originalline logEvents = json.load(json_file)['Records']
             sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
