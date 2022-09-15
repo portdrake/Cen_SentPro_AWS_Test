@@ -258,7 +258,7 @@ class S3Client:
             recordsvar = obj['Records']
             logging.info(recordsvar)
 
-            logEvents = json.load(json_file)[recordsvar] #STADD originalline logEvents = json.load(json_file)['Records']
+            logEvents = json.load(json_file) #STADD originalline logEvents = json.load(json_file)['Records']
             sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
         elif '.jsonl.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
