@@ -216,7 +216,7 @@ class S3Client:
             if '.csv.gz' in key.lower():
                 extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode()
             elif '.json.gz' in key.lower():
-                extracted_file = gzip.GzipFile(fileobj=file_obj)#.read().decode('utf-8') #STADD I added .read().decode('utf-8') 
+                extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode('utf-8') #STADD I added .read().decode('utf-8') 
             elif '.jsonl.gz' in key.lower():
                 extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode('utf-8')
             elif '.log.gz' in key.lower():
