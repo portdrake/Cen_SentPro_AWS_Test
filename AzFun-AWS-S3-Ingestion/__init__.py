@@ -255,8 +255,9 @@ class S3Client:
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
             #STADD #recordsvar = ['Records']
-            logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
-            sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
+            #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
+            #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
+            sortedLogEvents = json.loads(json_file)
         elif '.jsonl.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
