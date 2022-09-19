@@ -245,7 +245,8 @@ class S3Client:
             pass
         return date_string    
 
-    def correctSingleQuoteJSON(s): #STADD added to parse and error handle quotation errors
+    @staticmethod
+    def correctSingleQuoteJSON(Self,s): #STADD added to parse and error handle quotation errors
         rstr = ""
         escaped = False
 
