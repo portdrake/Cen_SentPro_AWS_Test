@@ -245,6 +245,26 @@ class S3Client:
             pass
         return date_string    
 
+    def correctSingleQuoteJSON(s): #STADD added to parse and error handle quotation errors
+        rstr = ""
+        escaped = False
+
+        for c in s:
+        
+            if c == "'" and not escaped:
+                c = '"' # replace single with double quote
+            
+            elif c == "'" and escaped:
+                rstr = rstr[:-1] # remove escape character before single quotes
+            
+            elif c == '"':
+                c = '\\' + c # escape existing double quotes
+    
+            escaped = (c == "\\") # check for an escape character
+            rstr += c # append the correct json
+        
+        return rstr
+
     @staticmethod
     def sort_files_by_date(ls):
         return sorted(ls, key=lambda k: k['LastModified'])
@@ -258,7 +278,7 @@ class S3Client:
             #STADD #recordsvar = ['Records']
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
             #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
-            logEvents = correctSingleQuoteJSON(json_file)
+            logEvents = self.correctSingleQuoteJSON(json_file)
             #sortedLogEvents = json.load(json_file)#['Records']
             sortedLogEvents = json.load(logEvents)
             print(sortedLogEvents)#STADD
@@ -484,26 +504,6 @@ class S3Client:
 
                 event = self.convert_empty_string_to_null_values(event)                
                 yield event
-
-    def correctSingleQuoteJSON(s): #STADD added to parse and error handle quotation errors
-        rstr = ""
-        escaped = False
-
-        for c in s:
-        
-            if c == "'" and not escaped:
-                c = '"' # replace single with double quote
-            
-            elif c == "'" and escaped:
-                rstr = rstr[:-1] # remove escape character before single quotes
-            
-            elif c == '"':
-                c = '\\' + c # escape existing double quotes
-    
-            escaped = (c == "\\") # check for an escape character
-            rstr += c # append the correct json
-        
-        return rstr
 
 class AzureSentinelConnector:
     def __init__(self, log_analytics_uri, customer_id, shared_key, log_type, queue_size=200, bulks_number=10, queue_size_bytes=25 * (2**20)):
