@@ -14,6 +14,7 @@ import hashlib
 import hmac
 import base64
 import re
+import ast #imported to try and universally error handle JSON errors
 from threading import Thread
 from io import StringIO
 
@@ -278,8 +279,9 @@ class S3Client:
             #STADD #recordsvar = ['Records']
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
             #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
-            json_file = json.dumps(json_file, separators=(",", ":"))
-            logEvents = json.loads(json_file)
+            #json_file = json.dumps(json_file, separators=(",", ":"))
+            correctedJson = json.dumps(ast.literal_eval(json_file))
+            logEvents = json.loads(correctedJson)
             #sortedLogEvents = json.load(json_file)#['Records']
             sortedLogEvents = logEvents#self.correctSingleQuoteJSON(logEvents)
             print(sortedLogEvents)#STADD
