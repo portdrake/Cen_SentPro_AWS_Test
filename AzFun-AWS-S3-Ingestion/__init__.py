@@ -280,7 +280,7 @@ class S3Client:
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
             #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
             #json_file = json.dumps(json_file, separators=(",", ":"))
-            correctedJson = json.dumps(ast.literal_eval(json.loads(json_file)))
+            correctedJson = json.dumps(ast.literal_eval(str(json_file))) # if this doesnt work replace loads with str()
             logEvents = json.loads(correctedJson)
             #sortedLogEvents = json.load(json_file)#['Records']
             sortedLogEvents = logEvents#self.correctSingleQuoteJSON(logEvents)
