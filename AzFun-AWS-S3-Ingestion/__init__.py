@@ -280,8 +280,8 @@ class S3Client:
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
             #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
             #json_file = json.dumps(json_file, separators=(",", ":"))
-            correctedJson = json.dumps(ast.literal_eval(str(json_file))) # if this doesnt work replace loads with str()
-            logEvents = json.loads(correctedJson)
+            #correctedJson = json.dumps(ast.literal_eval(str(json_file))) 
+            logEvents = json.loads(json_file)
             #sortedLogEvents = json.load(json_file)#['Records']
             sortedLogEvents = logEvents#self.correctSingleQuoteJSON(logEvents)
             print(sortedLogEvents)#STADD
@@ -574,6 +574,7 @@ class AzureSentinelConnector:
         body = re.sub(r'\\', '', body)
         body = re.sub(r'"{', '{', body)
         body = re.sub(r'}"', '}', body)
+        body = re.sub(r'\'', '\"', body)#STADD
         method = 'POST'
         content_type = 'application/json'
         resource = '/api/logs'
