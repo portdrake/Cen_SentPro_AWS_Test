@@ -286,7 +286,7 @@ class S3Client:
             #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
             #json_file = json.dumps(json_file, separators=(",", ":"))
             #correctedJson = json.dumps(ast.literal_eval(str(json_file))) 
-            jsonrecords = print(json_file["Records"])
+            jsonrecords = print(json_file)["Records"]
             sortedLogEvents = json.dumps(jsonrecords)
             #sortedLogEvents = json.load(json_file)#['Records']
             #workinglogEvents = json.loads(json_file)
@@ -579,7 +579,7 @@ class AzureSentinelConnector:
 
     def _post_data(self, customer_id, shared_key, body, log_type):
         events_number = len(body)
-        #body = json.dumps(body)
+        body = json.dumps(body)
         print(body)
         #body = re.sub(r'\\', '', body)
         #body = re.sub(r'"{', '{', body)
