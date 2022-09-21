@@ -217,8 +217,8 @@ class S3Client:
             if '.csv.gz' in key.lower():
                 extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode()
             elif '.json.gz' in key.lower():
-                # extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #STADD manual method of gzip
-                extracted_file = gzip.GzipFile(fileobj=file_obj).read()
+                extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #STADD manual method of gzip
+                #extracted_file = gzip.GzipFile(fileobj=file_obj).read()
                 #extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode('utf-8') #STADD I added .read().decode('utf-8') 
                 #DSwith gzip.open(file_obj, 'rt', encoding='utf-8') as f:
                     #DSextracted_file = json.load(f)
