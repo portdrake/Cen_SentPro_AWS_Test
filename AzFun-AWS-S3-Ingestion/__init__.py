@@ -214,7 +214,7 @@ class S3Client:
     def unpack_file(self, downloaded_obj, key):
         try:
             #orig file_obj = io.BytesIO(downloaded_obj)
-            file_obj = io.StringIO(downloaded_obj)
+            file_obj = io.BytesIO(downloaded_obj)
             if '.csv.gz' in key.lower():
                 extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode()
             elif '.json.gz' in key.lower():
