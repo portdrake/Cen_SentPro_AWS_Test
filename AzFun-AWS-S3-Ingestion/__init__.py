@@ -213,14 +213,15 @@ class S3Client:
 
     def unpack_file(self, downloaded_obj, key):
         try:
-            file_obj = io.BytesIO(downloaded_obj)
+            #orig file_obj = io.BytesIO(downloaded_obj)
+            file_obj = io.StringIO(downloaded_obj)
             if '.csv.gz' in key.lower():
                 extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode()
             elif '.json.gz' in key.lower():
-                extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #original line was fileextract = gzip.open(fileobj, 'rt', encoding='utf-8')
+                #extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #original line was fileextract = gzip.open(fileobj, 'rt', encoding='utf-8')
                 #extracted_file= json.loads(fileextract)
                 #LASTWORKINGextracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #STADD manual method of gzip
-                #extracted_file = gzip.GzipFile(fileobj=file_obj).read()
+                extracted_file = gzip.GzipFile(fileobj=file_obj).read()
                 #extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode('utf-8') #STADD I added .read().decode('utf-8') 
                 #DSwith gzip.open(file_obj, 'rt', encoding='utf-8') as f:
                     #DSextracted_file = json.load(f)
@@ -283,18 +284,18 @@ class S3Client:
             json_file = self.unpack_file(downloaded_obj, key)
             #STADD #recordsvar = ['Records']
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
-            #sortedLogEvents = sorted(logEvents, key=lambda r: r['eventTime'])
             #json_file = json.dumps(json_file, separators=(",", ":"))
             #correctedJson = json.dumps(ast.literal_eval(str(json_file))) 
             fileextract = print(json_file['Records'])
             jsonrecords = json.loads(fileextract)
-            sortedLogEvents = json.dumps(jsonrecords) # TODO Remove this dumps if printing works
+            #sortedLogEvents = json.dumps(jsonrecords) # TODO Remove this dumps if printing works
             #sortedLogEvents = json.load(json_file)#['Records']
             #workinglogEvents = json.loads(json_file)
             #sortedLogEvents = json.load(json_file)#['Records']
             #workingsortedLogEvents = logEvents#self.correctSingleQuoteJSON(logEvents)
             #print(sortedLogEvents)#STADD
             #DSsortedLogEvents = json.dumps(json_file)
+            sortedLogEvents = sorted(jsonrecords, key=lambda r: r['eventTime'])
         elif '.jsonl.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
