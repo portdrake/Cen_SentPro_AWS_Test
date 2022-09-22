@@ -217,7 +217,7 @@ class S3Client:
             if '.csv.gz' in key.lower():
                 extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode()
             elif '.json.gz' in key.lower():
-                fileextract = gzip.open(downloaded_obj, 'rt', encoding='utf-8') #original line was with file_obj
+                fileextract = gzip.GzipFile(fileobj=file_obj).read() #original line was fileextract = gzip.open(fileobj, 'rt', encoding='utf-8')
                 extracted_file= json.load(fileextract)
                 #LASTWORKINGextracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #STADD manual method of gzip
                 #extracted_file = gzip.GzipFile(fileobj=file_obj).read()
