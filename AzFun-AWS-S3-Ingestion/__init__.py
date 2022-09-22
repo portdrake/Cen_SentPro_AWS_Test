@@ -220,7 +220,7 @@ class S3Client:
             elif '.json.gz' in key.lower():
                 #extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #original line was fileextract = gzip.open(fileobj, 'rt', encoding='utf-8')
                 #extracted_file= json.loads(fileextract)
-                extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8') #STADD manual method of gzip
+                extracted_file = gzip.open(file_obj, 'rt', encoding='UTF-8').read() #STADD manual method of gzip
                 #extracted_file = gzip.GzipFile(fileobj=file_obj).read()
                 #extracted_file = gzip.GzipFile(fileobj=file_obj).read().decode('utf-8') #STADD I added .read().decode('utf-8') 
                 #DSwith gzip.open(file_obj, 'rt', encoding='utf-8') as f:
@@ -286,7 +286,8 @@ class S3Client:
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
             #json_file = json.dumps(json_file, separators=(",", ":"))
             #correctedJson = json.dumps(ast.literal_eval(str(json_file))) 
-            fileextract = print(json_file["Records"])
+            fileextract = (json_file["Records"])
+            print(fileextract)
             jsonrecords = json.loads(fileextract)
             #sortedLogEvents = json.dumps(jsonrecords) # TODO Remove this dumps if printing works
             #sortedLogEvents = json.load(json_file)#['Records']
