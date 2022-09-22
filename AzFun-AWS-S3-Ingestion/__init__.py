@@ -286,9 +286,9 @@ class S3Client:
             #logEvents = json.loads(json_file)#['Records'] #STADD originalline logEvents = json.load(json_file)['Records']
             #json_file = json.dumps(json_file, separators=(",", ":"))
             #correctedJson = json.dumps(ast.literal_eval(str(json_file))) 
-            fileextract = json.dumps(json_file)["Records"]
-            print(fileextract)
-            jsonrecords = json.loads(fileextract)
+            fileextract = json.dumps(json_file)
+            jsonrecords = json.loads(fileextract)["Records"]
+            print(jsonrecords)
             #sortedLogEvents = json.dumps(jsonrecords) # TODO Remove this dumps if printing works
             #sortedLogEvents = json.load(json_file)#['Records']
             #workinglogEvents = json.loads(json_file)
