@@ -1,3 +1,4 @@
+from operator import contains
 import requests
 import datetime
 import dateutil
@@ -287,8 +288,13 @@ class S3Client:
             #json_file = json.dumps(json_file, separators=(",", ":"))
             #correctedJson = json.dumps(ast.literal_eval(str(json_file))) 
             fileextract = json.loads(json_file)
-            jsonrecords = (fileextract)['Records']
-            print(jsonrecords)
+            if json_file.startswith('{"Records":'):
+                jsonrecords = (fileextract)['Records']
+                print(jsonrecords)
+                sortedLogEvents = sorted(jsonrecords, key=lambda r: r['eventTime'])
+            else: 
+                sortedLogEvents = ""
+            
             #sortedLogEvents = json.dumps(jsonrecords) # TODO Remove this dumps if printing works
             #sortedLogEvents = json.load(json_file)#['Records']
             #workinglogEvents = json.loads(json_file)
@@ -296,7 +302,7 @@ class S3Client:
             #workingsortedLogEvents = logEvents#self.correctSingleQuoteJSON(logEvents)
             #print(sortedLogEvents)#STADD
             #DSsortedLogEvents = json.dumps(json_file)
-            sortedLogEvents = sorted(jsonrecords, key=lambda r: r['eventTime'])
+            
         elif '.jsonl.gz' in key.lower():
             downloaded_obj = self.download_obj(key)
             json_file = self.unpack_file(downloaded_obj, key)
