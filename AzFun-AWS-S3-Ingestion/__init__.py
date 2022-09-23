@@ -290,7 +290,7 @@ class S3Client:
             fileextract = json.loads(json_file)
             if json_file.startswith('{"Records":'):
                 jsonrecords = (fileextract)['Records']
-                print(jsonrecords)
+                #print(jsonrecords)
                 sortedLogEvents = sorted(jsonrecords, key=lambda r: r['eventTime'])
             else: 
                 sortedLogEvents = ""
